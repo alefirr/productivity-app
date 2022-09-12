@@ -8,5 +8,4 @@ function App() {
 
   return <div>{isWorkSpaceOpen ? <WorkSpace /> : <ProgressPage />}</div>;
 }
-
 export default App;

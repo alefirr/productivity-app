@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { SideBar, ListView } from './';
 
 export const WorkSpace = () => {
+  const [keyName, setKeyName] = useState('');
   const [data, setData] = useState([
     {
       name: 'Today',
@@ -27,12 +28,16 @@ export const WorkSpace = () => {
     },
   ]);
 
+  const handleSideBarItemClick = (e) => {
+    setKeyName(e.target.innerText);
+  };
+
   return (
     <div className="workspace-container">
       <div className="top-bar"></div>
       <div className="workspace">
-        <SideBar data={data} />
-        <ListView data={data} setData={setData} />
+        <SideBar data={data} onSideBarItemClick={handleSideBarItemClick} />
+        <ListView data={data} setData={setData} keyName={keyName} />
       </div>
     </div>
   );

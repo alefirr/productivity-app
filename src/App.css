@@ -25,14 +25,50 @@
 }
 
 .side-bar-item {
-  height: 10px;
+  font-size: 20px;
   padding: 20px;
-
+  padding-left: 30px;
+  height: fit-content;
   border-bottom: 1px solid rgba(201, 201, 206, 1);
   border-radius: 5px;
+}
+
+.side-bar-item:hover {
+  background-color: rgba(217, 217, 220, 0.5);
+}
+
+.side-bar-item:active {
+  background-color: rgba(118, 118, 121, 0.5);
 }
 
 .list-view {
   width: 100%;
   height: 94vh;
+}
+
+.list-header {
+  font-size: 30px;
+  margin: 30px 0 0 80px;
+}
+.list-item {
+  margin: 20px 80px;
+  font-size: 18px;
+  font-family: 'Lato', sans-serif;
+}
+
+.add-side-bar-item {
+  display: flex;
+  flex-direction: row;
+  padding-left: 25px;
+}
+.add-side-bar-item span {
+  height: 24px;
+  font-size: 24px;
+}
+.add-side-bar-item p {
+  margin: 0;
+  height: 24px;
+  font-size: 20px;
+  /* padding-top: 2px; */
+  box-sizing: border-box;
 }
