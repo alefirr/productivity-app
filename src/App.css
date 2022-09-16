@@ -20,25 +20,35 @@
 .side-bar {
   width: 400px;
   height: 94vh;
-  background-color: rgba(236, 235, 238, 0.281);
-  box-shadow: 7px 0px 4px -6px rgba(201, 201, 206, 1);
+  background-color: rgba(223, 220, 214, 0.281);
+  /* box-shadow: 7px 0px 4px -6px rgba(201, 201, 206, 1); */
+  padding-top: 20px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .side-bar-item {
-  font-size: 20px;
-  padding: 20px;
+  padding: 10px;
+  margin: 5px 15px;
   padding-left: 30px;
   height: fit-content;
-  border-bottom: 1px solid rgba(201, 201, 206, 1);
-  border-radius: 5px;
+  /* border-bottom: 1px solid rgba(201, 201, 206, 1); */
+  border-radius: 20px;
 }
 
 .side-bar-item:hover {
-  background-color: rgba(217, 217, 220, 0.5);
+  background-color: rgb(255, 255, 255);
 }
 
 .side-bar-item:active {
-  background-color: rgba(118, 118, 121, 0.5);
+  background-color: rgba(199, 199, 204, 0.5);
+}
+
+.input-side-bar-item {
+  border: none;
+  background-color: transparent;
+  font-size: 18px;
+  color: black;
 }
 
 .list-view {

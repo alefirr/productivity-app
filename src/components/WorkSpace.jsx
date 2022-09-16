@@ -28,15 +28,19 @@ export const WorkSpace = () => {
     },
   ]);
 
-  const handleSideBarItemClick = (e) => {
-    setKeyName(e.target.innerText);
+  const handleSideBarItemClick = (index) => {
+    setKeyName(data[index].name);
   };
 
   return (
     <div className="workspace-container">
       <div className="top-bar"></div>
       <div className="workspace">
-        <SideBar data={data} onSideBarItemClick={handleSideBarItemClick} />
+        <SideBar
+          data={data}
+          onSideBarItemClick={handleSideBarItemClick}
+          setData={setData}
+        />
         <ListView data={data} setData={setData} keyName={keyName} />
       </div>
     </div>
