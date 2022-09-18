@@ -1,10 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
+
 import { Input } from './';
 
 export const SideBar = ({ data, onSideBarItemClick, setData }) => {
   const addSideBarItem = () => {
-    setData([...data, { name: 'New List', content: [] }]);
+    setData([...data, { name: 'New list', content: [], isNew: true }]);
   };
 
   return (
@@ -15,11 +15,11 @@ export const SideBar = ({ data, onSideBarItemClick, setData }) => {
           key={`side-item-${index}`}
           className="side-bar-item"
         >
-          <Input name={item.name} />
+          <Input index={index} data={data} setData={setData} />
         </div>
       ))}
       <div className="add-side-bar-item side-bar-item" onClick={addSideBarItem}>
-        <span class="material-symbols-outlined">add</span>
+        <span className="material-symbols-outlined">add</span>
         <p>Add new list</p>
       </div>
     </div>

@@ -1,21 +1,78 @@
 import React from 'react';
 import { useState } from 'react';
+import produce from 'immer';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
-export const Input = ({ name }) => {
-  const [isDisabled, setIsDisabled] = useState(true);
+export const Input = ({ index, data, setData }) => {
+  const inputRef = useRef();
 
-  const toggleIsDisabled = () => {
-    setIsDisabled((prev) => !prev);
+  const [isInputDisabled, setIsInputDisabled] = useState(true);
+
+  const isNew = data[index].isNew;
+
+  const toggleIsInputDisabled = (e) => {
+    e?.stopPropagation();
+    setIsInputDisabled((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (isNew) {
+      setIsInputDisabled(false);
+      setData(
+        produce((data) => {
+          data[index].isNew = false;
+        })
+      );
+    }
+  }, [index, isNew, setData]);
+
+  useEffect(() => {
+    if (!isInputDisabled) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [isInputDisabled]);
+
+  const handleOnInputChange = (e, index) => {
+    setData(
+      produce((data) => {
+        data[index].name = e.target.value;
+      })
+    );
+  };
+
+  const deleteSideBarItem = (e, index) => {
+    e.stopPropagation();
+    setData(
+      produce((data) => {
+        data.splice(index, 1);
+      })
+    );
   };
 
   return (
-    <div>
+    <div className="input-side-bar-item-container">
       <input
-        value={name}
-        disabled={isDisabled}
+        ref={inputRef}
+        value={data[index].name}
+        disabled={isInputDisabled}
+        onChange={(e) => handleOnInputChange(e, index)}
+        onBlur={toggleIsInputDisabled}
         className="input-side-bar-item"
       />
-      <button onClick={toggleIsDisabled}></button>
+      <button
+        onClick={toggleIsInputDisabled}
+        className="disable-input-side-bar-item-button"
+      >
+        <span className="material-symbols-outlined">edit</span>
+      </button>
+      <button
+        onClick={(e) => deleteSideBarItem(e, index)}
+        className="disable-input-side-bar-item-button"
+      >
+        <span className="material-symbols-outlined">delete</span>
+      </button>
     </div>
   );
 };
