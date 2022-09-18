@@ -1,11 +1,11 @@
 import React from 'react';
 
-export const ListView = ({ data, keyName }) => {
+export const ListOverview = ({ data, chosenList }) => {
   return (
     <div className="list-view">
-      <h2 className="list-header"> {keyName}</h2>
+      <h2 className="list-header"> {data[chosenList]?.name}</h2>
       {data.map((obj, index) =>
-        obj.name === keyName
+        index === chosenList
           ? obj.content.map((task, i) => (
               <div key={`task-${index}-${i}`} className="list-item">
                 {task.name}{' '}

@@ -1,35 +1,35 @@
 import React from 'react';
 import { useState } from 'react';
-import { SideBar, ListView } from './';
+import { SideBar, ListOverview } from './';
 
 export const WorkSpace = () => {
-  const [keyName, setKeyName] = useState('');
+  const [chosenListIndex, setChosenListIndex] = useState();
   const [data, setData] = useState([
     {
       name: 'Today',
       content: [
-        { name: 'Pee', status: 'not checked' },
-        { name: 'Poop', status: 'not checked' },
+        { name: 'Homework', status: 'not checked' },
+        { name: 'Household', status: 'not checked' },
       ],
     },
     {
       name: 'Tomorrow',
       content: [
-        { name: 'Pee', status: 'not checked' },
-        { name: 'Poop', status: ' checked' },
+        { name: 'trdelnik', status: 'not checked' },
+        { name: '', status: ' checked' },
       ],
     },
     {
       name: 'Work',
       content: [
-        { name: 'Pee at work', status: ' checked' },
-        { name: 'Poop at work', status: 'not checked' },
+        { name: 'push', status: ' checked' },
+        { name: 'pull', status: 'not checked' },
       ],
     },
   ]);
 
   const handleSideBarItemClick = (index) => {
-    setKeyName(data[index].name);
+    setChosenListIndex(index);
   };
 
   return (
@@ -41,7 +41,11 @@ export const WorkSpace = () => {
           onSideBarItemClick={handleSideBarItemClick}
           setData={setData}
         />
-        <ListView data={data} setData={setData} keyName={keyName} />
+        <ListOverview
+          data={data}
+          setData={setData}
+          chosenList={chosenListIndex}
+        />
       </div>
     </div>
   );
