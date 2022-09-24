@@ -4,7 +4,9 @@ import { Input } from './';
 
 export const SideBar = ({ data, onSideBarItemClick, setData }) => {
   const addSideBarItem = () => {
-    setData([...data, { name: 'New list', content: [], isNew: true }]);
+    const newItems = [...data, { name: 'New list', content: [], isNew: true }];
+    setData(newItems);
+    onSideBarItemClick(newItems.length - 1);
   };
 
   return (

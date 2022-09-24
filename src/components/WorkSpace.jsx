@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { SideBar, ListOverview } from './';
 
 export const WorkSpace = () => {
-  const [chosenListIndex, setChosenListIndex] = useState();
+  const [chosenListIndex, setChosenListIndex] = useState(0);
   const [data, setData] = useState([
     {
       name: 'Today',
@@ -41,10 +41,11 @@ export const WorkSpace = () => {
           onSideBarItemClick={handleSideBarItemClick}
           setData={setData}
         />
+
         <ListOverview
           data={data}
           setData={setData}
-          chosenList={chosenListIndex}
+          chosenListIndex={chosenListIndex}
         />
       </div>
     </div>
