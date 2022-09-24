@@ -8,22 +8,22 @@ export const WorkSpace = () => {
     {
       name: 'Today',
       content: [
-        { name: 'Homework', status: 'not checked' },
-        { name: 'Household', status: 'not checked' },
+        { name: 'Homework', isChecked: true },
+        { name: 'Household', isChecked: false },
       ],
     },
     {
       name: 'Tomorrow',
       content: [
-        { name: 'trdelnik', status: 'not checked' },
-        { name: '', status: ' checked' },
+        { name: 'trdelnik', isChecked: true },
+        { name: 'poop', isChecked: false },
       ],
     },
     {
       name: 'Work',
       content: [
-        { name: 'push', status: ' checked' },
-        { name: 'pull', status: 'not checked' },
+        { name: 'push', isChecked: true },
+        { name: 'pull', isChecked: false },
       ],
     },
   ]);

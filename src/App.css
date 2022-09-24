@@ -97,6 +97,11 @@
   height: 24px;
   font-size: 20px;
 }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
 
 .list-view {
   width: 100%;
@@ -107,8 +112,16 @@
   font-size: 30px;
   margin: 30px 0 0 80px;
 }
-.list-item {
+.list {
   margin: 20px 80px;
   font-size: 18px;
   font-family: 'Lato', sans-serif;
+}
+
+.list-item-checked {
+  color: blue;
+}
+
+.list-item-not-checked {
+  color: red;
 }
