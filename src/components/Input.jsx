@@ -10,6 +10,11 @@ export const Input = ({ index, data, setData }) => {
   const [isInputDisabled, setIsInputDisabled] = useState(true);
 
   const isNew = data[index].isNew;
+  const isEnterPressed = (e) => {
+    if (e.keyCode === 13) {
+      setIsInputDisabled(true);
+    }
+  };
 
   const toggleIsInputDisabled = (e) => {
     e?.stopPropagation();
@@ -59,6 +64,7 @@ export const Input = ({ index, data, setData }) => {
         disabled={isInputDisabled}
         onChange={(e) => handleOnInputChange(e, index)}
         onBlur={toggleIsInputDisabled}
+        onKeyDown={isEnterPressed}
         className="input-side-bar-item"
       />
       <button
