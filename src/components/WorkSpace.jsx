@@ -40,6 +40,7 @@ export const WorkSpace = () => {
           data={data}
           onSideBarItemClick={handleSideBarItemClick}
           setData={setData}
+          setChosenListIndex={setChosenListIndex}
         />
 
         <ListOverview

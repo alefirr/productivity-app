@@ -19,7 +19,6 @@
 
 .side-bar {
   width: 400px;
-
   background-color: rgba(223, 220, 214, 0.281);
   padding-top: 20px;
   overflow-y: scroll;
@@ -27,11 +26,14 @@
 }
 
 .side-bar-item {
+  height: 50px;
   padding: 10px;
   margin: 5px 15px 5px 25px;
   padding-left: 30px;
   height: fit-content;
   border-radius: 20px;
+  display: flex;
+  flex-direction: row;
 }
 
 .side-bar-item:hover {
@@ -50,6 +52,7 @@
 }
 
 .input-side-bar-item {
+  height: 30px;
   width: 100%;
   text-align: start;
   border: none;
