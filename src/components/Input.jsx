@@ -1,10 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
-import produce from 'immer';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 
-export const Input = ({ index, data, setData, setChosenListIndex }) => {
+export const Input = ({
+  index,
+  data,
+  setData,
+  handleOnInputChange,
+  deleteItem,
+  setD,
+  onClick,
+}) => {
   const inputRef = useRef();
 
   const [isInputDisabled, setIsInputDisabled] = useState(true);
@@ -21,18 +28,16 @@ export const Input = ({ index, data, setData, setChosenListIndex }) => {
   const toggleIsInputDisabled = (e) => {
     e?.stopPropagation();
     setIsInputDisabled((prev) => !prev);
+    console.log('toggle');
   };
 
   useEffect(() => {
     if (isNew) {
       setIsInputDisabled(false);
-      setData(
-        produce((data) => {
-          data[index].isNew = false;
-        })
-      );
+      console.log('toggle');
+      setD(index);
     }
-  }, [index, isNew, setData]);
+  }, [index, isNew, setD, setData]);
 
   useEffect(() => {
     if (!isInputDisabled) {
@@ -41,29 +46,12 @@ export const Input = ({ index, data, setData, setChosenListIndex }) => {
     }
   }, [isInputDisabled]);
 
-  const handleOnInputChange = (e, index) => {
-    setData(
-      produce((data) => {
-        data[index].name = e.target.value;
-      })
-    );
-  };
-
-  const deleteSideBarItem = (e, index) => {
-    e.stopPropagation();
-    setData(
-      produce((data) => {
-        data.splice(index, 1);
-      })
-    );
-    setChosenListIndex(index - 1);
-  };
-
   return (
     <div
-      className=" side-bar-item"
+      className="side-bar-item"
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
     >
       <input
         ref={inputRef}
@@ -83,7 +71,7 @@ export const Input = ({ index, data, setData, setChosenListIndex }) => {
             <span className="material-symbols-outlined">edit</span>
           </button>
           <button
-            onClick={(e) => deleteSideBarItem(e, index)}
+            onClick={(e) => deleteItem(e, index)}
             className="disable-input-side-bar-item-button"
           >
             <span className="material-symbols-outlined">delete</span>

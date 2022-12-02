@@ -133,3 +133,9 @@ ul {
   font-weight: 700;
   cursor: pointer;
 }
+.add-new-task-item {
+  margin-left: 40px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}

@@ -1,7 +1,13 @@
 import React from 'react';
+import { Input } from './';
 import produce from 'immer';
 
-export const ListOverview = ({ data, setData, chosenListIndex }) => {
+export const ListOverview = ({
+  data,
+  setData,
+  chosenListIndex,
+  setChosenListIndex,
+}) => {
   const chosenList = data[chosenListIndex];
 
   const addNewListItem = () => {
@@ -10,7 +16,16 @@ export const ListOverview = ({ data, setData, chosenListIndex }) => {
         draft[chosenListIndex].content?.push({
           name: 'New item',
           isChecked: false,
+          isNew: true,
         });
+      })
+    );
+  };
+
+  const setD = (index) => {
+    setData(
+      produce((draft) => {
+        draft[chosenListIndex].content[index].isNew = false;
       })
     );
   };
@@ -23,27 +38,46 @@ export const ListOverview = ({ data, setData, chosenListIndex }) => {
       })
     );
   };
+  const handleOnInputChangeListOverview = (e, index) => {
+    setData(
+      produce((draft) => {
+        draft[chosenListIndex].content[index].name = e.target.value;
+      })
+    );
+  };
+  const deleteListOverviewItem = (e, index) => {
+    e.stopPropagation();
+    setData(
+      produce((draft) => {
+        draft[chosenListIndex].content.splice(index, 1);
+      })
+    );
+  };
 
   return (
     <div className="list-view">
       <h2 className="list-header"> {chosenList?.name}</h2>
-      <ul className="list">
+      <div className="list">
         {chosenList?.content.map((task, i) => (
-          <div className="2">
-            <li
+          <div className="2" key={`task-${i}`}>
+            <Input
+              index={i}
+              data={chosenList.content}
+              setData={setData}
+              setChosenListIndex={setChosenListIndex}
+              handleOnInputChange={handleOnInputChangeListOverview}
+              deleteItem={deleteListOverviewItem}
+              setD={setD}
               onClick={() => toggleIsChecked(i)}
-              key={`task-${task.name}-${i}`}
               className={
                 task.isChecked
                   ? 'list-item-checked list-item'
                   : 'list-item-not-checked list-item'
               }
-            >
-              {task.name}
-            </li>
+            />
           </div>
         ))}
-      </ul>
+      </div>
       <button onClick={addNewListItem} className="add-new-task-item">
         +Add new task
       </button>
