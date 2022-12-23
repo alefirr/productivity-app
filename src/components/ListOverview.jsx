@@ -62,7 +62,7 @@ export const ListOverview = ({
           <div className="2" key={`task-${i}`}>
             <Input
               index={i}
-              data={chosenList.content}
+              value={chosenList.content[i].name}
               setData={setData}
               setChosenListIndex={setChosenListIndex}
               handleOnInputChange={handleOnInputChangeListOverview}

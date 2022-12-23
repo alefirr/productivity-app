@@ -1,43 +1,31 @@
 import React from 'react';
 import { Input } from './';
-import produce from 'immer';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const SideBar = ({
-  data,
-  onSideBarItemClick,
-  setData,
-  setChosenListIndex,
-}) => {
+export const SideBar = ({ setChosenListIndex }) => {
+  const data = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const addSideBarItem = () => {
-    const newItems = [...data, { name: 'New list', content: [], isNew: true }];
-    setData(newItems);
-    onSideBarItemClick(newItems.length - 1);
+    dispatch({ type: 'add_sidebar_item' });
+    setChosenListIndex(data.length);
   };
 
   const handleOnInputChangeSideBar = (e, index) => {
-    setData(
-      produce((draft) => {
-        draft[index].name = e.target.value;
-      })
-    );
+    dispatch({
+      type: 'change_sidebar_item',
+      payload: { name: e.target.value, index },
+    });
   };
 
   const deleteSideBarItem = (e, index) => {
     e.stopPropagation();
-    setData(
-      produce((data) => {
-        data.splice(index, 1);
-      })
-    );
+    dispatch({ type: 'delete_sidebar_item', payload: index });
     setChosenListIndex(index - 1);
   };
 
   const setD = (index) => {
-    setData(
-      produce((data) => {
-        data[index].isNew = false;
-      })
-    );
+    dispatch({ type: 'disable_isNew', payload: index });
   };
 
   return (
@@ -45,14 +33,14 @@ export const SideBar = ({
       {data.map((_, index) => (
         <Input
           index={index}
-          data={data}
-          setData={setData}
-          onClick={() => onSideBarItemClick(index)}
+          value={data[index].name}
+          onClick={() => setChosenListIndex(index)}
           setChosenListIndex={setChosenListIndex}
           key={`side-item-${index}`}
           handleOnInputChange={handleOnInputChangeSideBar}
           deleteItem={deleteSideBarItem}
           setD={setD}
+          isNew={data[index].isNew}
         />
       ))}
 

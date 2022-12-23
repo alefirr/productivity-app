@@ -5,19 +5,18 @@ import { useEffect } from 'react';
 
 export const Input = ({
   index,
-  data,
+  value,
   setData,
   handleOnInputChange,
   deleteItem,
   setD,
   onClick,
+  isNew,
 }) => {
   const inputRef = useRef();
 
   const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-
-  const isNew = data[index].isNew;
 
   const isEnterPressed = (e) => {
     if (e.keyCode === 13) {
@@ -28,13 +27,11 @@ export const Input = ({
   const toggleIsInputDisabled = (e) => {
     e?.stopPropagation();
     setIsInputDisabled((prev) => !prev);
-    console.log('toggle');
   };
 
   useEffect(() => {
     if (isNew) {
       setIsInputDisabled(false);
-      console.log('toggle');
       setD(index);
     }
   }, [index, isNew, setD, setData]);
@@ -55,7 +52,7 @@ export const Input = ({
     >
       <input
         ref={inputRef}
-        value={data[index].name}
+        value={value}
         disabled={isInputDisabled}
         onChange={(e) => handleOnInputChange(e, index)}
         onBlur={toggleIsInputDisabled}
