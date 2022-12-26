@@ -4,13 +4,11 @@ import { useRef } from 'react';
 import { useEffect } from 'react';
 
 export const Input = ({
-  index,
   value,
-  setData,
-  handleOnInputChange,
+  onChange,
+  onInputClick,
   deleteItem,
-  setD,
-  onClick,
+  setInputAsOld,
   isNew,
 }) => {
   const inputRef = useRef();
@@ -32,9 +30,9 @@ export const Input = ({
   useEffect(() => {
     if (isNew) {
       setIsInputDisabled(false);
-      setD(index);
+      setInputAsOld();
     }
-  }, [index, isNew, setD, setData]);
+  }, [isNew, setInputAsOld]);
 
   useEffect(() => {
     if (!isInputDisabled) {
@@ -48,13 +46,13 @@ export const Input = ({
       className="side-bar-item"
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={onClick}
+      onClick={onInputClick}
     >
       <input
         ref={inputRef}
         value={value}
         disabled={isInputDisabled}
-        onChange={(e) => handleOnInputChange(e, index)}
+        onChange={onChange}
         onBlur={toggleIsInputDisabled}
         onKeyDown={isEnterPressed}
         className="input-side-bar-item"
@@ -68,7 +66,7 @@ export const Input = ({
             <span className="material-symbols-outlined">edit</span>
           </button>
           <button
-            onClick={(e) => deleteItem(e, index)}
+            onClick={deleteItem}
             className="disable-input-side-bar-item-button"
           >
             <span className="material-symbols-outlined">delete</span>

@@ -1,20 +1,24 @@
 import React from 'react';
 import { useState } from 'react';
 import { SideBar, ListOverview } from './';
+import store from '../store';
+import { Provider } from 'react-redux';
 
 export const WorkSpace = () => {
-  const [chosenListIndex, setChosenListIndex] = useState();
+  const [chosenListIndex, setChosenListIndex] = useState(0);
 
   return (
-    <div className="workspace-container">
-      <div className="top-bar"></div>
-      <div className="workspace">
-        <SideBar setChosenListIndex={setChosenListIndex} />
-        <ListOverview
-          chosenListIndex={chosenListIndex}
-          setChosenListIndex={setChosenListIndex}
-        />
+    <Provider store={store}>
+      <div className="workspace-container">
+        <div className="top-bar"></div>
+        <div className="workspace">
+          <SideBar setChosenListIndex={setChosenListIndex} />
+          <ListOverview
+            chosenListIndex={chosenListIndex}
+            setChosenListIndex={setChosenListIndex}
+          />
+        </div>
       </div>
-    </div>
+    </Provider>
   );
 };

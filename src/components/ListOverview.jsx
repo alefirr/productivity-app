@@ -1,74 +1,54 @@
 import React from 'react';
 import { Input } from './';
-import produce from 'immer';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const ListOverview = ({
-  data,
-  setData,
-  chosenListIndex,
-  setChosenListIndex,
-}) => {
-  const chosenList = data[chosenListIndex];
+export const ListOverview = ({ chosenListIndex, setChosenListIndex }) => {
+  const data = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const addNewListItem = () => {
-    setData(
-      produce((draft) => {
-        draft[chosenListIndex].content?.push({
-          name: 'New item',
-          isChecked: false,
-          isNew: true,
-        });
-      })
-    );
+    dispatch({ type: 'add_new_list_item', payload: chosenListIndex });
   };
 
-  const setD = (index) => {
-    setData(
-      produce((draft) => {
-        draft[chosenListIndex].content[index].isNew = false;
-      })
-    );
+  const setListInputAsOld = (index) => {
+    dispatch({
+      type: 'disable_list_item_isNew',
+      payload: { index, chosenListIndex },
+    });
   };
 
   const toggleIsChecked = (index) => {
-    setData(
-      produce((dataDraft) => {
-        dataDraft[chosenListIndex].content[index].isChecked =
-          !dataDraft[chosenListIndex].content[index].isChecked;
-      })
-    );
+    dispatch({
+      type: 'toggle_list_item_isChecked',
+      payload: { index, chosenListIndex },
+    });
   };
-  const handleOnInputChangeListOverview = (e, index) => {
-    setData(
-      produce((draft) => {
-        draft[chosenListIndex].content[index].name = e.target.value;
-      })
-    );
+  const handleOnInputChange = (e, index) => {
+    dispatch({
+      type: 'change_list_item',
+      payload: { name: e.target.value, index, chosenListIndex },
+    });
   };
   const deleteListOverviewItem = (e, index) => {
     e.stopPropagation();
-    setData(
-      produce((draft) => {
-        draft[chosenListIndex].content.splice(index, 1);
-      })
-    );
+    dispatch({ type: 'delete_list_item', payload: { index, chosenListIndex } });
   };
+
+  const chosenList = data[chosenListIndex];
 
   return (
     <div className="list-view">
-      <h2 className="list-header"> {chosenList?.name}</h2>
+      <h2 className="list-header">{chosenList?.name}</h2>
       <div className="list">
         {chosenList?.content.map((task, i) => (
           <div className="2" key={`task-${i}`}>
             <Input
-              index={i}
               value={chosenList.content[i].name}
-              setData={setData}
-              setChosenListIndex={setChosenListIndex}
-              handleOnInputChange={handleOnInputChangeListOverview}
-              deleteItem={deleteListOverviewItem}
-              setD={setD}
-              onClick={() => toggleIsChecked(i)}
+              onChange={(e) => handleOnInputChange(e, i)}
+              onInputClick={() => toggleIsChecked(i)}
+              deleteItem={(e) => deleteListOverviewItem(e, i)}
+              setInputAsOld={() => setListInputAsOld(i)}
+              isNew={task.isNew}
               className={
                 task.isChecked
                   ? 'list-item-checked list-item'

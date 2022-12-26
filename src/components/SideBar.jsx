@@ -7,7 +7,7 @@ export const SideBar = ({ setChosenListIndex }) => {
   const dispatch = useDispatch();
 
   const addSideBarItem = () => {
-    dispatch({ type: 'add_sidebar_item' });
+    dispatch({ type: 'add_new_sidebar_item' });
     setChosenListIndex(data.length);
   };
 
@@ -20,27 +20,25 @@ export const SideBar = ({ setChosenListIndex }) => {
 
   const deleteSideBarItem = (e, index) => {
     e.stopPropagation();
-    dispatch({ type: 'delete_sidebar_item', payload: index });
+    dispatch({ type: 'delete_sidebar_item', payload: { index } });
     setChosenListIndex(index - 1);
   };
 
-  const setD = (index) => {
-    dispatch({ type: 'disable_isNew', payload: index });
+  const setSideBarInputAsOld = (index) => {
+    dispatch({ type: 'disable_sidebar_item_isNew', payload: index });
   };
 
   return (
     <div className="side-bar">
-      {data.map((_, index) => (
+      {data.map((item, index) => (
         <Input
-          index={index}
-          value={data[index].name}
-          onClick={() => setChosenListIndex(index)}
-          setChosenListIndex={setChosenListIndex}
+          value={item.name}
+          onChange={(e) => handleOnInputChangeSideBar(e, index)}
+          onInputClick={() => setChosenListIndex(index)}
+          deleteItem={(e) => deleteSideBarItem(e, index)}
+          setInputAsOld={() => setSideBarInputAsOld(index)}
+          isNew={item.isNew}
           key={`side-item-${index}`}
-          handleOnInputChange={handleOnInputChangeSideBar}
-          deleteItem={deleteSideBarItem}
-          setD={setD}
-          isNew={data[index].isNew}
         />
       ))}
 

@@ -24,19 +24,51 @@ const initialState = [
   },
 ];
 
-export const reducer = (state = initialState, action) => {
+export const rootReducer = (state = initialState, action) => {
+  const itemIndex = action.payload?.index;
+  const chosenListIndex = action.payload?.chosenListIndex;
+
   switch (action.type) {
-    case 'add_sidebar_item':
+    case 'add_new_sidebar_item':
       return [...state, { name: 'New list', content: [], isNew: true }];
-    case 'delete_sidebar_item':
-      return state.filter((_, index) => index !== action.payload);
+    case 'add_new_list_item':
+      return produce(state, (draft) => {
+        draft[action.payload].content?.push({
+          name: 'New item',
+          isChecked: false,
+          isNew: true,
+        });
+      });
+
     case 'change_sidebar_item':
       return produce(state, (draft) => {
-        draft[action.payload.index].name = action.payload.name;
+        draft[itemIndex].name = action.payload.name;
       });
-    case 'disable_isNew':
+    case 'change_list_item':
       return produce(state, (draft) => {
-        draft[action.payload.index].isNew = false;
+        draft[chosenListIndex].content[itemIndex].name = action.payload.name;
+      });
+
+    case 'delete_sidebar_item':
+      return state.filter((_, index) => index !== itemIndex);
+    case 'delete_list_item':
+      return produce(state, (draft) => {
+        draft[chosenListIndex].content.splice(itemIndex, 1);
+      });
+
+    case 'disable_sidebar_item_isNew':
+      return produce(state, (draft) => {
+        draft[itemIndex].isNew = false;
+      });
+    case 'disable_list_item_isNew':
+      return produce(state, (draft) => {
+        draft[chosenListIndex].content[itemIndex].isNew = false;
+      });
+
+    case 'toggle_list_item_isChecked':
+      return produce(state, (draft) => {
+        draft[chosenListIndex].content[itemIndex].isChecked =
+          !draft[chosenListIndex].content[itemIndex].isChecked;
       });
     default:
       return state;
